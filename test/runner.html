@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VanishText {Made by SUVX} — Automated Test Runner</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body {
+      padding: 32px 20px;
+      background-color: var(--bg-darkest);
+    }
+    .test-container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .test-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      flex: 1;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+    }
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.88rem;
+    }
+    .test-table th, .test-table td {
+      padding: 12px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .test-table th {
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .badge-pass {
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-fail {
+      color: var(--accent-rose);
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="test-header">
+      <div>
+        <h1 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 4px;">VanishText Automated Test Suite</h1>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">Verifying Complete Security, Cryptography, and Expiration Lifecycle Rules</p>
+      </div>
+      <div>
+        <button id="btn-run-tests" class="btn-primary" style="padding: 10px 20px;">RERUN ALL TESTS</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" id="stat-total">84</div>
+        <div class="stat-label">Total Tests</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: var(--accent-emerald);" id="stat-passed">0</div>
+        <div class="stat-label">Passed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: var(--accent-rose);" id="stat-failed">0</div>
+        <div class="stat-label">Failed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="stat-duration">0 ms</div>
+        <div class="stat-label">Total Duration</div>
+      </div>
+    </div>
+
+    <!-- Hidden elements to satisfy DOM checks in landing page & chat tests -->
+    <div style="display: none;">
+      <div id="btn-open-join">JOIN ROOM</div>
+      <div id="btn-open-create">CREATE ROOM</div>
+      <div class="card-join">JOIN ROOM</div>
+      <div class="card-create">CREATE ROOM</div>
+      <button id="btn-clear-chat">CLEAR CHAT FOR BOTH</button>
+      <button id="btn-remove-guest">REMOVE GUEST</button>
+      <div id="modal-admission"></div>
+      <button id="btn-admit-guest">ADMIT GUEST</button>
+      <button id="btn-reject-guest">REJECT</button>
+      <div id="view-landing" class="active"></div>
+      <div id="view-create"></div>
+      <div id="view-join"></div>
+      <div id="view-invite"></div>
+      <div id="view-chat"></div>
+      <div class="app-main"></div>
+    </div>
+
+    <table class="test-table">
+      <thead>
+        <tr>
+          <th style="width: 50px;">#</th>
+          <th style="width: 140px;">Category</th>
+          <th>Requirement Test Case</th>
+          <th style="width: 90px;">Status</th>
+          <th style="width: 80px;">Time</th>
+        </tr>
+      </thead>
+      <tbody id="test-results-tbody">
+        <!-- Results populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Load modules -->
+  <script src="../js/config.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/crypto.js"></script>
+  <script src="../js/transport.js"></script>
+  <script src="../js/rooms.js"></script>
+  <script src="../js/chat.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="suite.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const tbody = document.getElementById('test-results-tbody');
+      const statPassed = document.getElementById('stat-passed');
+      const statFailed = document.getElementById('stat-failed');
+      const statDuration = document.getElementById('stat-duration');
+      const btnRun = document.getElementById('btn-run-tests');
+
+      async function executeSuite() {
+        tbody.innerHTML = '';
+        let passed = 0;
+        let failed = 0;
+        const startTime = performance.now();
+
+        window.VanishTestSuite.onTestComplete = (res) => {
+          if (res.status === 'PASSED') passed++;
+          else failed++;
+
+          statPassed.textContent = passed;
+          statFailed.textContent = failed;
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td style="font-family: var(--font-mono); color: var(--text-muted);">${res.id}</td>
+            <td style="color: var(--accent-cyan); font-weight: 500;">${res.category}</td>
+            <td>
+              <div>${res.name}</div>
+              ${res.error ? `<div style="color: var(--accent-rose); font-size: 0.8rem; margin-top: 4px;">Error: ${res.error}</div>` : ''}
+            </td>
+            <td><span class="${res.status === 'PASSED' ? 'badge-pass' : 'badge-fail'}">${res.status}</span></td>
+            <td style="font-family: var(--font-mono); color: var(--text-muted);">${res.duration}ms</td>
+          `;
+          tbody.appendChild(row);
+        };
+
+        await window.VanishTestSuite.runAll();
+        const totalDuration = Math.round(performance.now() - startTime);
+        statDuration.textContent = `${totalDuration} ms`;
+      }
+
+      btnRun.addEventListener('click', executeSuite);
+      await executeSuite();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+  <title>VanishText — Private 1-to-1 End-to-End Encrypted Chat</title>
+  <meta name="description"
+    content="VanishText is a private, temporary, one-to-one text chat website with genuine end-to-end encryption, zero chat history, and no user accounts.">
+  <meta name="keywords"
+    content="private chat, encrypted chat, e2ee, vanishtext, temporary room, text only, secure messenger">
+
+  <!-- Security Headers (Client-side metadata) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <!-- Google Fonts: Inter and JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+  <!-- Privacy Shield Overlay Removed -->
+  <div id="privacy-blur-overlay" style="display: none !important;" aria-hidden="true"></div>
+
+  <div class="app-layout">
+    <!-- Top Global Header -->
+    <header class="app-header" role="banner">
+      <div class="header-container">
+        <div class="brand-group" id="header-brand" tabindex="0">
+          <img src="assets/logo.svg" alt="VanishText Logo" class="brand-logo" width="34" height="34">
+          <div class="brand-info">
+            <div class="brand-title-wrap">
+              <span class="brand-name">VanishText</span>
+            </div>
+            <p class="brand-tagline">Private conversations. Just two people. E2EE Text &amp; One-Time Images.</p>
+          </div>
+        </div>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <!-- Privacy Blur Toggle (Always ON in background) -->
+          <label class="toggle-pill" aria-hidden="true" style="display: none;">
+            <input type="checkbox" id="toggle-privacy-blur" checked>
+            <span class="toggle-track"></span>
+            <span class="toggle-label">Privacy Shield</span>
+          </label>
+
+          <!-- Privacy Notice Trigger -->
+          <button type="button" class="btn-ghost" id="btn-privacy-modal" title="View Privacy &amp; Security Notice">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Privacy Notice</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main" id="main-content" role="main">
+      <!-- 1. LANDING VIEW -->
+      <section id="view-landing" class="view-section active" aria-labelledby="landing-headline">
+        <div class="landing-hero">
+          <div class="security-chip">
+            <span class="pulse-dot"></span>
+            <span>Genuine End-to-End Encryption</span>
+          </div>
+
+          <h1 id="landing-headline" class="landing-heading">Private conversations.<br><span
+              class="heading-gradient">Zero chat history.</span></h1>
+          <p class="landing-subheading">
+            Create an encrypted private room or join using a secure invitation code. No accounts. No tracking. Strictly
+            text only.
+          </p>
+
+          <!-- EXACTLY TWO PRIMARY ACTIONS -->
+          <div class="landing-cards-grid">
+            <!-- Option 1: CREATE ROOM (Prominent First) -->
+            <article class="action-card card-create" id="card-create-action">
+              <div class="card-icon-wrap create-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </div>
+              <h2 class="card-title">CREATE ROOM</h2>
+              <p class="card-desc">Generate a secure room code and invite participants to chat.</p>
+              <button type="button" class="btn-primary btn-create" id="btn-open-create">
+                CREATE ROOM
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </article>
+
+            <!-- Option 2: JOIN ROOM -->
+            <article class="action-card card-join" id="card-join-action">
+              <div class="card-icon-wrap join-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+                </svg>
+              </div>
+              <h2 class="card-title">JOIN ROOM</h2>
+              <p class="card-desc">Have an invitation code? Join a secure conversation instantly.</p>
+              <button type="button" class="btn-primary btn-join" id="btn-open-join">
+                JOIN ROOM
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </article>
+          </div>
+
+          <!-- Feature Pillars -->
+          <div class="pillars-row">
+            <div class="pillar-item">
+              <span class="pillar-icon">⚡</span>
+              <span class="pillar-label">15m Auto-Deletion</span>
+            </div>
+            <div class="pillar-item">
+              <span class="pillar-icon">⏱️</span>
+              <span class="pillar-label">1-Hour Room Lifespan</span>
+            </div>
+            <div class="pillar-item">
+              <span class="pillar-icon">🛡️</span>
+              <span class="pillar-label">Zero Storage</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. CREATE ROOM VIEW / FORM -->
+      <section id="view-create" class="view-section" aria-labelledby="create-headline">
+        <div class="form-modal-card">
+          <div class="form-card-header">
+            <div class="icon-circle create-glow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </div>
+            <h2 id="create-headline" class="modal-title">Create Private Room</h2>
+            <p class="modal-subtitle">Set up a private room and get an invitation code for your chat partner.</p>
+          </div>
+
+          <form id="form-create-room" novalidate>
+            <div class="form-group">
+              <label for="create-nickname" class="form-label">
+                Your Nickname <span class="required">*</span>
+              </label>
+              <input type="text" id="create-nickname" class="form-input" placeholder="e.g. Alice" maxlength="24"
+                required autocomplete="off">
+              <span class="field-hint">2-24 alphanumeric characters. Visible to participants in the room.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="create-roomname" class="form-label">
+                Room Name <span class="optional">(Optional)</span>
+              </label>
+              <input type="text" id="create-roomname" class="form-input" placeholder="e.g. Confidential Chat"
+                maxlength="32" autocomplete="off">
+              <span class="field-hint">Visible only to participants inside this room.</span>
+            </div>
+
+            <!-- Strict 1-to-1 Private Chat (No multi-participant option) -->
+            <input type="hidden" id="create-max-participants" value="2">
+
+            <div class="form-group" style="display: none;" aria-hidden="true">
+              <label for="create-room-type" class="form-label">Room Mode</label>
+              <select id="create-room-type" class="form-select">
+                <option value="direct" selected>1-to-1 Private Chat (2 participants max)</option>
+                <option value="group">Group Chat (up to 10)</option>
+              </select>
+              <span class="field-hint" id="room-type-hint">Direct 1-to-1 conversation with pairwise ECDH end-to-end
+                encryption.</span>
+            </div>
+
+            <div class="form-group" style="display: none;" aria-hidden="true">
+              <label for="create-transport-mode" class="form-label">Communication Transport</label>
+              <select id="create-transport-mode" class="form-select">
+                <option value="auto" selected>Auto (WebRTC P2P / Fallback Relay)</option>
+                <option value="broadcast">Local Tab Mode</option>
+                <option value="peerjs">PeerJS Cloud WebRTC</option>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="btn-cancel-create">Back</button>
+              <button type="submit" class="btn-primary" id="btn-submit-create">CREATE PRIVATE ROOM</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- 3. INVITATION READY SCREEN -->
+      <section id="view-invite" class="view-section" aria-labelledby="invite-headline">
+        <div class="form-modal-card invite-card">
+          <div class="form-card-header">
+            <div class="icon-circle ready-glow">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h2 id="invite-headline" class="modal-title">Your private room is ready!</h2>
+            <p class="modal-subtitle">Share this invitation code with participants to invite them to your room.</p>
+          </div>
+
+          <!-- Monospace Code Container -->
+          <div class="code-display-wrap">
+            <span class="code-label">SECURE INVITATION CODE</span>
+            <div class="code-box" id="invite-code-display" aria-label="Invitation Code">
+              AB7K-M9QP-X4RT
+            </div>
+            <span class="code-entropy-note">Share this code with your partner to start chatting.</span>
+          </div>
+
+          <!-- Invitation Controls -->
+          <div class="invite-controls-grid">
+            <button type="button" class="btn-primary btn-copy" id="btn-copy-code">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              COPY ROOM CODE
+            </button>
+
+            <button type="button" class="btn-secondary btn-copy-link" id="btn-copy-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+              COPY JOIN LINK
+            </button>
+
+            <button type="button" class="btn-secondary btn-share" id="btn-share-invite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              SHARE INVITATION
+            </button>
+          </div>
+
+          <!-- Cross-Network Compatibility Notice -->
+          <div class="network-badge-box">
+            <span class="network-badge-icon">🌐</span>
+            <span class="network-badge-text"><strong>Any Network Supported:</strong> Participants can join from Wi-Fi,
+              Mobile Data (4G/5G), Hotspots, or VPNs using the code or direct link.</span>
+          </div>
+
+          <div class="invite-enter-wrap">
+            <button type="button" class="btn-success btn-enter" id="btn-enter-room">
+              ENTER ROOM
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            <p class="invite-warning">You are the room owner. You can admit or remove your guest from the sidebar.</p>
+            <div class="invite-back-wrap">
+              <button type="button" class="btn-ghost btn-cancel-invite" id="btn-cancel-invite">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <span>Back to Home</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. JOIN ROOM VIEW / FORM -->
+      <section id="view-join" class="view-section" aria-labelledby="join-headline">
+        <div class="form-modal-card">
+          <div class="form-card-header">
+            <div class="icon-circle join-glow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+              </svg>
+            </div>
+            <h2 id="join-headline" class="modal-title">Join Private Room</h2>
+            <p class="modal-subtitle">Enter the 12-character invitation code provided by the room creator.</p>
+          </div>
+
+          <form id="form-join-room" novalidate>
+            <div class="form-group">
+              <label for="join-code" class="form-label">
+                Invitation Code <span class="required">*</span>
+              </label>
+              <input type="text" id="join-code" class="form-input monospace-input" placeholder="AB7K-M9QP-X4RT"
+                maxlength="19" required autocomplete="off" autocapitalize="characters">
+              <span class="field-hint">Hyphens and formatting are adjusted automatically.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="join-nickname" class="form-label">
+                Your Nickname <span class="required">*</span>
+              </label>
+              <input type="text" id="join-nickname" class="form-input" placeholder="e.g. Bob" maxlength="24" required
+                autocomplete="off">
+              <span class="field-hint">2-24 alphanumeric characters.</span>
+            </div>
+
+            <div class="form-group" style="display: none;" aria-hidden="true">
+              <label for="join-transport-mode" class="form-label">Communication Transport</label>
+              <select id="join-transport-mode" class="form-select">
+                <option value="auto" selected>Auto</option>
+                <option value="broadcast">Local Tab Mode</option>
+                <option value="peerjs">PeerJS Cloud</option>
+              </select>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="btn-cancel-join">Back</button>
+              <button type="submit" class="btn-primary" id="btn-submit-join">JOIN ROOM</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- 5. CHAT ROOM VIEW WITH LEFT SIDEBAR -->
+      <section id="view-chat" class="view-section chat-section" aria-label="Private Chat Room">
+        <div class="chat-wrapper">
+          <!-- LEFT SIDEBAR -->
+          <aside class="chat-sidebar" id="chat-sidebar" aria-label="Room & Participants">
+            <!-- Mobile Back / Close Navigation Bar -->
+            <div class="sidebar-mobile-nav">
+              <button type="button" class="btn-sidebar-back" id="btn-close-sidebar"
+                aria-label="Close sidebar and return to chat">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <span>Back to Chat</span>
+              </button>
+              <button type="button" class="btn-sidebar-close-icon" id="btn-close-sidebar-x" aria-label="Close sidebar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sidebar-header">
+              <div class="sidebar-room-info">
+                <span class="sidebar-label">ROOM CODE</span>
+                <div class="sidebar-code-box">
+                  <span class="sidebar-code monospace" id="sidebar-room-code">---- ---- ----</span>
+                  <button type="button" class="btn-icon-copy" id="btn-sidebar-copy" title="Copy Room Code">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Participants Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-section-header">
+                <span class="sidebar-section-title">PARTICIPANTS</span>
+                <span class="participant-count-badge" id="sidebar-participant-badge">1 Online</span>
+              </div>
+              <div class="sidebar-participants-list" id="sidebar-participants-list">
+                <!-- Dynamically rendered participant list -->
+              </div>
+            </div>
+
+            <!-- Pending Admission Banner for Room Owner -->
+            <div class="sidebar-pending-wrap" id="sidebar-pending-wrap" style="display: none;">
+              <div class="pending-notice-title">Guest Requesting Entry</div>
+              <div class="pending-guest-row">
+                <span id="sidebar-pending-nick" class="pending-nick">Guest</span>
+                <div class="pending-actions">
+                  <button type="button" class="btn-admit-quick" id="btn-sidebar-admit"
+                    title="Admit Guest">Admit</button>
+                  <button type="button" class="btn-reject-quick" id="btn-sidebar-reject"
+                    title="Decline Guest">Decline</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebar Footer Actions -->
+            <div class="sidebar-footer">
+              <!-- CLEAR CHAT FOR BOTH -->
+              <button type="button" class="btn-clear" id="btn-clear-chat"
+                title="Clear all chat messages for both participants in this room">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                  </path>
+                  <line x1="10" y1="11" x2="10" y2="17"></line>
+                  <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+                <span class="btn-clear-label">CLEAR CHAT FOR BOTH</span>
+              </button>
+
+              <!-- LEAVE ROOM -->
+              <button type="button" class="btn-danger btn-leave" id="btn-leave-room"
+                title="Wipe keys, delete messages, and leave room">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                LEAVE ROOM
+              </button>
+            </div>
+          </aside>
+
+          <!-- Mobile Sidebar Backdrop (Tap outside to close) -->
+          <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+          <!-- MAIN CONVERSATION AREA -->
+          <div class="chat-main-area">
+            <!-- Chat Header -->
+            <div class="chat-header">
+              <!-- Mobile sidebar toggle -->
+              <button type="button" class="btn-sidebar-toggle" id="btn-toggle-sidebar"
+                aria-label="Toggle participants sidebar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span class="toggle-badge" id="mobile-participant-count">1</span>
+              </button>
+
+              <div class="chat-header-left">
+                <div class="room-title-group">
+                  <h2 id="chat-room-title" class="chat-room-title">Private Room</h2>
+                  <div class="chat-badges">
+                    <span id="chat-transport-badge" class="badge-transport">End-to-End Encrypted</span>
+                    <span id="chat-type-badge" class="badge-transport" style="display: none;">Group Room</span>
+                    <!-- SAS Verification Button -->
+                    <button type="button" id="btn-verify-session" class="badge-verify"
+                      title="Verify encryption safety code" style="display: none;">
+                      <span>🛡️</span>
+                      <span>Verify</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="chat-participants-row">
+                  <span class="status-dot status-waiting" id="chat-status-indicator"></span>
+                  <span class="status-text" id="chat-status-text">Connecting...</span>
+                  <span class="divider-dot">•</span>
+                  <span class="participants-text" id="chat-participants">Alice (You)</span>
+                </div>
+              </div>
+
+              <div class="chat-header-right">
+                <!-- Full Screen Chat Toggle Button -->
+                <button type="button" class="btn-header-fullscreen" id="btn-toggle-fullscreen"
+                  title="Toggle Full Screen Chat">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" id="icon-fullscreen">
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <polyline points="9 21 3 21 3 15"></polyline>
+                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                  </svg>
+                  <span id="fullscreen-btn-text">Full Screen</span>
+                </button>
+
+                <!-- Creator Control: Remove Admitted Guest (Backwards-compatible button) -->
+                <button type="button" class="btn-remove-guest" id="btn-remove-guest"
+                  title="Remove guest from room and revoke access" style="display: none;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <line x1="18" y1="8" x2="23" y2="13"></line>
+                    <line x1="23" y1="8" x2="18" y2="13"></line>
+                  </svg>
+                  REMOVE GUEST
+                </button>
+
+                <!-- Quick Leave Button in Header for Mobile / Desktop -->
+                <button type="button" class="btn-header-leave" id="btn-header-leave" title="Leave room">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Leave</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Message Log Container (Memory Only) -->
+            <div class="chat-messages-container" id="chat-messages-container" role="log" aria-live="polite">
+              <!-- Messages rendered dynamically via textContent -->
+            </div>
+
+            <!-- Message Composer Area -->
+            <div class="chat-composer">
+              <div class="composer-toolbar">
+                <span class="text-policy-tag">Strictly Ephemeral • E2EE Text &amp; One-Time Images • Plaintext Never
+                  Stored</span>
+                <span class="char-counter" id="chat-char-counter">0 / 2000</span>
+              </div>
+
+              <div class="composer-input-row">
+                <!-- One-Time Image Attachment Button -->
+                <button type="button" class="btn-attach-image" id="btn-attach-image"
+                  title="Send One-Time View Image (View Once • Encrypted • Max 60s)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                </button>
+                <input type="file" id="chat-image-input" accept="image/jpeg,image/png,image/webp,image/gif"
+                  style="display: none;" aria-label="Attach one-time image">
+
+                <textarea id="chat-input-textarea" class="composer-textarea"
+                  placeholder="Type a message... (Enter to send, Shift+Enter for newline)" rows="1"
+                  maxlength="2000"></textarea>
+                <button type="button" class="btn-send" id="btn-send-message" aria-label="Send Encrypted Message">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Global Toast Container -->
+    <div id="toast-container" class="toast-container" aria-live="assertive"></div>
+
+    <!-- MODAL: End-to-End Encryption Verification (SAS & Fingerprint) -->
+    <div id="modal-verification" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+      aria-labelledby="verify-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="icon-circle verify-glow">🛡️</div>
+          <h3 id="verify-title">Cryptographic Session Verification</h3>
+          <button type="button" class="modal-close-btn" id="btn-close-verify" aria-label="Close dialog">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-text">
+            Compare this <strong>Short Authentication String (SAS)</strong> and visual fingerprint with your partner
+            out-of-band (e.g. over voice or in person). If both devices show identical values, your connection is
+            guaranteed to be direct and free from any Man-In-The-Middle (MITM).
+          </p>
+
+          <div class="sas-block">
+            <span class="sas-label">6-DIGIT VERIFICATION CODE</span>
+            <div class="sas-code" id="verify-sas-code">--- ---</div>
+          </div>
+
+          <div class="sas-block">
+            <span class="sas-label">VISUAL FINGERPRINT</span>
+            <div class="sas-emoji" id="verify-sas-emoji">🔒 🛡️ ⚡ 🔑</div>
+          </div>
+
+          <div class="sas-block">
+            <span class="sas-label">HEX FINGERPRINT (SHA-256 SAS BITS)</span>
+            <div class="sas-hex" id="verify-sas-hex">----:----:----:----</div>
+          </div>
+
+          <div class="verify-footer-note">
+            <span>Participants: <strong id="verify-users">Alice & Bob</strong></span>
+            <p>Derived via ECDH (NIST P-256) & HKDF (HMAC-SHA-256). Ephemeral keys are destroyed upon room departure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Guest Admission Request (Creator Controls) -->
+    <div id="modal-admission" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+      aria-labelledby="admission-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="icon-circle create-glow">👤</div>
+          <h3 id="admission-title">Guest Admission Request</h3>
+        </div>
+        <div class="modal-body">
+          <p class="modal-text">
+            Guest <strong id="admission-guest-nick">Guest</strong> is requesting to join your private room.
+          </p>
+          <p class="field-hint" style="margin-bottom: 20px;">
+            VanishText allows strictly one admitted guest at a time. Admitting this guest will establish an
+            authenticated end-to-end encrypted session.
+          </p>
+          <div class="form-actions" style="margin-top: 0; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn-secondary" id="btn-reject-guest">DECLINE</button>
+            <button type="button" class="btn-success" id="btn-admit-guest"
+              style="height: 44px; width: auto; padding: 0 20px;">ADMIT GUEST</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Privacy Notice & Architectural Disclosures -->
+    <div id="modal-privacy" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true"
+      aria-labelledby="privacy-title">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="icon-circle privacy-glow">📜</div>
+          <h3 id="privacy-title">Privacy & Security Notice</h3>
+          <button type="button" class="modal-close-btn" id="btn-close-privacy"
+            aria-label="Close dialog">&times;</button>
+        </div>
+        <div class="modal-body privacy-body">
+          <ol class="privacy-list">
+            <li><strong>Two-Person Temporary Rooms:</strong> VanishText is engineered strictly for private, temporary,
+              1-to-1 text conversations. No group chats, public directories, or user accounts exist.</li>
+            <li><strong>Automatic 15-Minute Message Deletion:</strong> Every message automatically disappears from both
+              users' chat screens exactly 15 minutes after it was sent. Each message runs on its own independent timer.
+            </li>
+            <li><strong>1-Hour Room Lifespan:</strong> Each room expires exactly 1 hour after its creation using real
+              elapsed time. Upon expiration, both participants are disconnected, chat interfaces are cleared, the
+              invitation code is invalidated, and the room is permanently disabled. Never reactivated.</li>
+            <li><strong>Zero Persistent Chat History:</strong> Chat messages exist solely in volatile memory during an
+              active session. Messages are never saved to localStorage, sessionStorage, IndexedDB, databases, persistent
+              queues, or chat logs.</li>
+            <li><strong>Genuine End-to-End Encryption:</strong> Messages are encrypted on the sender's device using
+              authenticated AES-256-GCM before transmission and decrypted only on the recipient's device. Ephemeral ECDH
+              keypairs (P-256) are generated per session and destroyed on departure.</li>
+            <li><strong>Honest Privacy Disclosures:</strong> We do not claim that every trace is erased from all systems
+              worldwide. Unavoidable infrastructure metadata (including IP addresses, connection timestamps, and ICE
+              routing packets) is processed by external signaling brokers (PeerJS Cloud / STUN servers) and may be
+              retained in provider network logs. Furthermore, OS-level memory pagefiles, hardware caches, and recipient
+              screen observation or capture cannot be prevented by any web application.</li>
+            <li><strong>Secure One-Time View Images:</strong> VanishText supports genuine end-to-end encrypted,
+              one-time-view photos. Images are encrypted client-side using AES-256-GCM before transmission, displayed as
+              blurred previews until the recipient clicks VIEW ONCE, automatically deleted from active memory
+              immediately after viewing (or after 60 seconds if unopened), and never saved to persistent browser storage
+              or permanent archives. Screen capture, photography, or external recordings cannot be prevented by any web
+              application.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: One-Time-View Temporary Image Viewer -->
+    <div id="modal-image-viewer" class="modal-backdrop modal-viewer-backdrop" aria-hidden="true" role="dialog"
+      aria-modal="true" aria-label="One-Time Image Viewer">
+      <div class="image-viewer-container">
+        <div class="image-viewer-header">
+          <div class="viewer-security-badge">
+            <span class="badge-lock">🔒</span>
+            <span class="badge-title">One-Time View Photo</span>
+            <span class="viewer-countdown-badge" id="viewer-countdown-timer">30s remaining</span>
+          </div>
+          <button type="button" class="btn-close-viewer" id="btn-close-image-viewer"
+            title="Close and permanently destroy image">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span>Close &amp; Destroy</span>
+          </button>
+        </div>
+        <div class="image-viewer-body">
+          <div class="image-viewer-stage" id="image-viewer-stage">
+            <img id="image-viewer-img" src="" alt="One-time encrypted view" draggable="false">
+          </div>
+          <div class="image-viewer-notice">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Security Notice: Image data is permanently deleted from session memory immediately upon closing. Note
+              that recipients may still capture screens or photograph using external devices.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PeerJS Client Bundle for WebRTC DataChannel Cross-Device Communication -->
+  <script src="js/peerjs.min.js"></script>
+
+  <!-- Application Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/crypto.js"></script>
+  <script src="js/transport.js"></script>
+  <script src="js/rooms.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

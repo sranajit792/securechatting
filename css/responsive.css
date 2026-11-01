@@ -1,0 +1,362 @@
+/* ==========================================================================
+   VanishText {Made by SUVX} — Responsive Adaptations
+   Mobile Phones (<640px) • Tablets (641px - 1024px) • Desktop (>1024px)
+   ========================================================================== */
+
+/* Tablet & Smaller Laptops */
+@media screen and (max-width: 900px) {
+  .header-container {
+    padding: 0 16px;
+  }
+
+  .landing-hero {
+    padding: 24px 16px 20px;
+  }
+
+  .landing-cards-grid {
+    gap: 16px;
+  }
+
+  .action-card {
+    padding: 24px 20px;
+  }
+
+  .chat-section {
+    padding: 0;
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 0%;
+  }
+
+  .app-header {
+    height: 64px;
+  }
+}
+
+/* Mobile Screens (<720px) */
+@media screen and (max-width: 720px) {
+  .brand-tagline {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 1.15rem;
+  }
+
+  .brand-badge {
+    font-size: 0.68rem;
+    padding: 1px 5px;
+  }
+
+  .landing-heading {
+    font-size: 1.85rem;
+    margin-bottom: 10px;
+  }
+
+  .landing-subheading {
+    font-size: 0.92rem;
+    margin-bottom: 24px;
+  }
+
+  /* Stack landing cards vertically on mobile */
+  .landing-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .action-card {
+    padding: 22px 18px;
+  }
+
+  .card-icon-wrap {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  .card-icon-wrap svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+
+  .btn-primary {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+
+  .pillars-row {
+    gap: 8px;
+  }
+
+  .pillar-item {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  /* Form modal cards */
+  .form-modal-card {
+    padding: 24px 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .code-box {
+    font-size: 1.35rem;
+    letter-spacing: 0.06em;
+    padding: 6px 10px;
+  }
+
+  .invite-controls-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Chat View on Mobile */
+  .chat-section {
+    padding: 0;
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 0%;
+    overflow: hidden !important;
+  }
+
+  .chat-wrapper {
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 0%;
+    overflow: hidden;
+  }
+
+  .chat-main-area {
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100% !important;
+  }
+
+  /* Mobile Sidebar Drawer & Backdrop */
+  .btn-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .sidebar-mobile-nav {
+    display: flex;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(3, 5, 10, 0.78);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .chat-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+    height: 100dvh;
+    height: var(--app-height, 100dvh);
+    background: #090e1a;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.9);
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000 !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chat-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .chat-header {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .chat-header-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chat-room-title {
+    font-size: 0.95rem;
+  }
+
+  .badge-transport {
+    display: none;
+  }
+
+  .chat-participants-row {
+    font-size: 0.75rem;
+    gap: 6px;
+  }
+
+  .participants-text {
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .chat-header-right {
+    flex-shrink: 0;
+  }
+
+  .btn-header-leave {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+
+  .btn-leave {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+
+  .chat-messages-container {
+    padding: 12px;
+    gap: 10px;
+    flex: 1 1 0%;
+    min-height: 0;
+    height: auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .message-bubble {
+    max-width: 90%;
+    padding: 8px 12px;
+  }
+
+  .message-text {
+    font-size: 0.88rem;
+  }
+
+  .chat-composer {
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .composer-input-row {
+    gap: 8px;
+  }
+
+  .composer-textarea {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+
+  .btn-attach-image {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .btn-send {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .image-viewer-container {
+    max-width: 100%;
+    max-height: 94vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .image-viewer-header {
+    padding: 10px 14px;
+  }
+
+  .btn-close-viewer {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+  }
+
+  /* Modals on mobile */
+  .modal-dialog {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .toast {
+    max-width: 100%;
+  }
+}
+
+/* Extra small devices (<400px) */
+@media screen and (max-width: 400px) {
+  .header-actions .btn-ghost span {
+    display: none;
+  }
+
+  .header-actions .btn-ghost {
+    padding: 8px;
+  }
+
+  .toggle-pill .toggle-label {
+    display: none;
+  }
+
+  .code-box {
+    font-size: 1.15rem;
+  }
+}

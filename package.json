@@ -1,0 +1,18 @@
+{
+  "name": "securechatsystem",
+  "version": "1.0.0",
+  "description": "VanishText is a temporary, private, text-only chat website built strictly with **HTML5, CSS3, and Vanilla JavaScript (ES6+)**. It allows exactly two participants to create a private room, exchange a cryptographically secure random invitation code, establish a peer-to-peer authenticated session with genuine **End-to-End Encryption (AES-256-GCM + ECDH P-256)**, and chat without leaving any trace or chat history behind.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.22.0"
+  }
+}

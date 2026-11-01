@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" width="48" height="48">
+  <defs>
+    <linearGradient id="shieldGrad" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10B981" />
+      <stop offset="0.5" stop-color="#06B6D4" />
+      <stop offset="1" stop-color="#6366F1" />
+    </linearGradient>
+    <linearGradient id="bubbleGrad" x1="12" y1="14" x2="36" y2="34" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A" />
+      <stop offset="1" stop-color="#1E293B" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Shield Contour -->
+  <path d="M24 4L8 10V22C8 32.5 14.8 41.8 24 44C33.2 41.8 40 32.5 40 22V10L24 4Z" 
+        stroke="url(#shieldGrad)" stroke-width="2.5" stroke-linejoin="round" fill="rgba(16, 185, 129, 0.06)" filter="url(#glow)" />
+  
+  <!-- Inner Chat Bubble Contour (Geometric Stealth) -->
+  <path d="M16 18C16 16.3431 17.3431 15 19 15H29C30.6569 15 32 16.3431 32 18V26C32 27.6569 30.6569 29 29 29H22L17 33V29H19C17.3431 29 16 27.6569 16 26V18Z" 
+        fill="url(#bubbleGrad)" stroke="#10B981" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+        
+  <!-- Keyhole / Disappearing Lock Core in Bubble -->
+  <circle cx="24" cy="21" r="2" fill="#10B981" />
+  <path d="M23 22.5L22 25.5H26L25 22.5" fill="#10B981" />
+  
+  <!-- Disappearing Ephemeral Pulse Dots -->
+  <circle cx="12" cy="10" r="1.5" fill="#06B6D4" opacity="0.8" />
+  <circle cx="36" cy="10" r="1.5" fill="#10B981" opacity="0.8" />
+</svg>
