@@ -1,4 +1,4 @@
-# VanishText {Made by SUVX}
+# VanishText 
 ### Ephemeral, One-to-One, End-to-End Encrypted Private Chat
 
 VanishText is a temporary, private, text-only chat website built strictly with **HTML5, CSS3, and Vanilla JavaScript (ES6+)**. It allows exactly two participants to create a private room, exchange a cryptographically secure random invitation code, establish a peer-to-peer authenticated session with genuine **End-to-End Encryption (AES-256-GCM + ECDH P-256)**, and chat without leaving any trace or chat history behind.
